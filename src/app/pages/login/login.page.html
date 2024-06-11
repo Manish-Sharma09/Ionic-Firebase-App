@@ -4,16 +4,37 @@
     <p class="subTtile">Sign In to access your account</p>
 
   </div>
-  <form action="">
+  <form [formGroup]="loginForm" novalidate>
     <div class="ion-padding">
       <ion-item>
-        <ion-input class="input" placeholder="Enter Username"></ion-input>
-        <ion-icon name="person-outline"></ion-icon>
+        <ion-input formControlName="email" class="input" placeholder="Enter Email"></ion-input>
+        <ion-icon name="mail-outline"></ion-icon>
       </ion-item>
+      <div *ngIf="loginForm.controls['email'].touched && loginForm.controls['email'].invalid">
+        <ion-text *ngIf="loginForm.controls['email'].errors?.['required']" color="danger">
+          Email is required
+        </ion-text>
+        <ion-text *ngIf="loginForm.controls['email'].errors?.['email']" color="danger">
+          Invalid email format
+        </ion-text>
+        <ion-text *ngIf="loginForm.controls['email'].errors?.['pattern']" color="danger">
+          Email does not match pattern
+        </ion-text>
+      </div>
+
       <ion-item>
-        <ion-input class="input" placeholder="Enter Password"></ion-input>
+        <ion-input formControlName="password" class="input" type="password" placeholder="Enter Password"></ion-input>
         <ion-icon name="lock-closed-outline"></ion-icon>
       </ion-item>
+      <div *ngIf="loginForm.controls['password'].touched && loginForm.controls['password'].invalid">
+        <ion-text *ngIf="loginForm.controls['password'].errors?.['required']" color="danger">
+          Password is required
+        </ion-text>
+        <ion-text *ngIf="loginForm.controls['password'].errors?.['minlength']" color="danger">
+          Password must be at least 6 characters long
+        </ion-text>
+      </div>
+
       <div class="forgotPassword">
         <a [routerLink]="['../reset-password']" style="color: #ffc33f;">Forget Password?</a>
       </div>
@@ -21,7 +42,7 @@
         <p> New member? <a style="color: #ffc33f;" [routerLink]="['../signup']">Sign Up</a></p>
       </div>
       <ion-fab vertical="bottom" horizontal="end" style="margin: 0 20px 20px 0">
-        <ion-fab-button [routerLink]="['../landing']">
+        <ion-fab-button (click)="login();">
           <ion-icon name="chevron-forward-outline"></ion-icon>
         </ion-fab-button>
       </ion-fab>

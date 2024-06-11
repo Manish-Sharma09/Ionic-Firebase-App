@@ -1,6 +1,7 @@
 {
-  "name": "Firebase Authantication",
+  "name": "myApp",
   "integrations": {
+    "cordova": {},
     "capacitor": {}
   },
   "type": "angular"
